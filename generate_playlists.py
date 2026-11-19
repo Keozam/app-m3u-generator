@@ -364,11 +364,11 @@ def fetch_channel_list(proxy, retries=3):
 
 def create_group_mapping(json_data):
     group_mapping = {}
-    content_ids_by_container = json_data.get('epg', {}).get('contentIdsByContainer', {})
+    content_ids_by_container = json_data.get('epg', {}).get('contentIdsByContainer', {}); content_ids_by_container = {str(i): v for i, v in enumerate(content_ids_by_container)} if isinstance(content_ids_by_container, list) else content_ids_by_container
     for container_list in content_ids_by_container.values():
-        for category in container_list:
-            group_name = category.get('name', 'Other')
-            for content_id in category.get('contents', []):
+        for category in (container_list.values() if isinstance(container_list, dict) else container_list):
+            group_name = category.get('name', 'Other') if isinstance(category, dict) else 'Other'
+            for content_id in (category.get('contents', []) if isinstance(category, dict) else ([category] if isinstance(category, str) else category if isinstance(category, list) else [])):
                 group_mapping[str(content_id)] = group_name
     return group_mapping
 
