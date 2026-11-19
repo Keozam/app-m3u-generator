@@ -440,8 +440,8 @@ def generate_tubi_m3u():
     channel_list = []
     content_ids_by_container = json_data.get('epg', {}).get('contentIdsByContainer', {}); content_ids_by_container = {str(i): v for i, v in enumerate(content_ids_by_container)} if isinstance(content_ids_by_container, list) else content_ids_by_container
     for container_list in content_ids_by_container.values():
-        for category in container_list:
-            channel_list.extend(category.get('contents', []) if isinstance(category, dict) else [])
+        for category in (container_list.values() if isinstance(container_list, dict) else container_list):
+            channel_list.extend(category.get('contents', []) if isinstance(category, dict) else ([category] if isinstance(category, str) else category if isinstance(category, list) else []))
 
     epg_data = fetch_epg_data(channel_list)
     if epg_data:
