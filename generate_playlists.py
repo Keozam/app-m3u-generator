@@ -439,7 +439,7 @@ def generate_tubi_m3u():
 
     channel_list = []
     content_ids_by_container = json_data.get('epg', {}).get('contentIdsByContainer', {})
-    for container_list in content_ids_by_container.values():
+    f"https://{slug_template.replace('{id}', ch['original_id'])}"
         for category in container_list:
             channel_list.extend(category.get('contents', []))
 
