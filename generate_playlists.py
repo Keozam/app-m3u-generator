@@ -231,7 +231,7 @@ def generate_samsungtvplus_m3u():
                     group_title,
                     ch['name']
                 ),
-                f"https://jmp2.uk/{slug_template.replace('{id}', ch['original_id'])}\n"
+                f"https://{slug_template.replace('{id}', ch['original_id'])}"
             ])
 
         write_m3u_file(f"samsungtvplus_{region}.m3u", "".join(output_lines))
