@@ -316,7 +316,7 @@ def generate_roku_m3u():
         for c_id, ch in sorted(group_map[group], key=lambda x: x[1].get('name', '').lower()):
             output_lines.extend([
                 format_extinf(c_id, c_id, ch.get('chno'), ch['name'], ch['logo'], group, ch['name']),
-                f"https://jmp2.uk/rok-{c_id}.m3u8\n"
+                f"https://i.mjh.nz/Roku/{c_id}.m3u8\n"
             ])
 
     write_m3u_file("roku_all.m3u", "".join(output_lines))
