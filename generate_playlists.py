@@ -235,7 +235,15 @@ def generate_samsungtvplus_m3u():
             ])
 
         write_m3u_file(f"samsungtvplus_{region}.m3u", "".join(output_lines))
-
+def resolver_directo(url_proxy):
+    try:
+        r = requests.head(url_proxy, allow_redirects=True, timeout=10)
+        final = r.url
+        if "delivery.roku.com" in final:
+            return final
+        return final
+    except:
+        return url_proxy
 def generate_roku_m3u():
     data = fetch_url('https://i.mjh.nz/Roku/.channels.json', is_json=True)
     if not data: return
@@ -316,7 +324,7 @@ def generate_roku_m3u():
         for c_id, ch in sorted(group_map[group], key=lambda x: x[1].get('name', '').lower()):
             output_lines.extend([
                 format_extinf(c_id, c_id, ch.get('chno'), ch['name'], ch['logo'], group, ch['name']),
-                f"https://jmp2.uk/rok-{c_id}.m3u8\n"
+                resolver_directo(f"https://jmp2.uk/rok-{c_id}.m3u8") + "\n"
             ])
 
     write_m3u_file("roku_all.m3u", "".join(output_lines))
